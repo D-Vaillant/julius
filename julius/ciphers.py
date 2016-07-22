@@ -40,10 +40,11 @@ def encrypt(plain_text: str,
 
 
 if __name__ == "__main__":
-    D = {'abc':           'a',
-         'asajioasoj':    'asijaio',
-         'askl':          'bc',
-         'ioeijqiosnoas': 'asd'}
+    """ The cutting edge of testing technologies """
+    from json import load
 
-    for k, v in D.items():
-        assert(k == encrypt(encrypt(k, v), v, decrypting=True))
+    with open('cipher_fixture.json', 'r') as file_:
+        dynamic_fixture = load(file_)
+
+    for a, b in dynamic_fixture:
+        assert(a == encrypt(encrypt(a, b), b, decrypting=True))
