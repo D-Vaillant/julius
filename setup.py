@@ -11,6 +11,10 @@ import julius
 
 
 # Some utilities.
+num_to_word = {'1': 'one', '2': 'two', '3': 'three', '4': 'four', '5': 'five',
+               '6': 'six', '7': 'seven', '8': 'eight', '9': 'nine', '0': 'zero'}
+
+
 class MissingKeyError(Exception):
     pass
 
@@ -67,7 +71,8 @@ parser.add_argument('--otp',
                     action='store_true',
                     help="If key is omitted, generate a random key of length "
                          "equal to the length of the plain_text and save it to "
-                         "the given file location.\n[KEY]")
+                         "the given file location.\nStores a file containing "
+                         "key.\n[KEY]")
 
 parser.add_argument('--decrypt',
                     action='store_true',
@@ -88,6 +93,16 @@ args = parser.parse_args()
 
 plain_text = file_wrapper(args.plain_text[0])
 
+
+# Some plain_text text mungling.
+for k, v in num_to_word.items():
+    plain_text = plain_text.replace(k, v)
+
+# (wipe it out)
+plain_text = str(char for char in plain_text if char in string.letters).lower()
+
+
+# This is the part that deals with keys.
 try:
     if args.key is None:
         raise KeyError
@@ -99,6 +114,9 @@ except KeyError:
 
     if args.otp:
         key = julius.create_random_key(length=len(plain_text))
+        with open("key_{}.txt".format(plain_text[:5]), 'w') as key_file:
+            key_file.write(key)
+
     elif args.key_length > 0:
         key = julius.create_random_key(length=args.key_length)
     elif args.caesar:
