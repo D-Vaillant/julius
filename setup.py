@@ -75,19 +75,19 @@ parser.add_argument('--key_length',
                     default=0,
                     type=int,
                     help="If key is omitted, generate a random key of given "
-                         "length and use that.\n[KEY]")
+                         "length and use that. This is a KEY argument.")
 
 parser.add_argument('--caesar',
                     action='store_true',
                     help="If key is omitted, generate a random key of length 1 "
-                         "and use that.\n[KEY]")
+                         "and use that. This is a KEY argument.")
 
 parser.add_argument('--otp',
                     action='store_true',
                     help="If key is omitted, generate a random key of length "
                          "equal to the length of the plain_text and save it to "
                          "the given file location.\nStores a file containing "
-                         "key.\n[KEY]")
+                         "key. This is a KEY argument.")
 
 
 # Use-case arguments.
@@ -96,14 +96,18 @@ parser.add_argument('--decrypt',
                     help="Key cannot be omitted. Decrypts a text encrypted "
                          "with the given key.")
 
-parser.add_argument('--unsafe',
-                    nargs='?',
-                    type=int,
-                    default=0,
-                    help="Allows for the preservation of non-alphanumeric characters.\n"
-                         "Controls punctuation and capitalization.\n"
-                         "0 - strip all\n1 - strip punctuation\n"
-                         "2 - strip capitalization\n3 - strip none")
+parser.add_argument(
+    '--unsafe',
+    nargs='?',
+    type=int,
+    default=0,
+    help="Allows for the preservation of non-alphanumeric characters.\n"
+        "Controls punctuation, capitalization, and spaces.\r\n"
+        "It's a binary notation: SPACES - CAPITALIZATION - PUNCTUATION.\r\n"
+        "001 -> 1 => strip spaces and capitalization, keep punctuation\r\n"
+        "111 -> 1 + 2 + 4 = 7 => keep all\r\n"
+        "101 -> 4 + 0 + 1 = 5 => strip capitalization"
+)
 
 
 if __name__ == "__main__":

@@ -37,14 +37,3 @@ def encrypt(plain_text: str,
     out = [chr(ord('a') + (ord(letter) - ord('a') + shift_by)%26)
            for letter, shift_by in zip(plain_text, itertools.cycle(key))]
     return ''.join(out)
-
-
-if __name__ == "__main__":
-    """ The cutting edge of testing technologies """
-    from json import load
-
-    with open('cipher_fixture.json', 'r') as file_:
-        dynamic_fixture = load(file_)
-
-    for a, b in dynamic_fixture:
-        assert(a == encrypt(encrypt(a, b), b, decrypting=True))
