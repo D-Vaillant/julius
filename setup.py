@@ -6,6 +6,7 @@
 from typing import Union
 from io import TextIOBase
 
+import string
 import argparse
 import julius
 
@@ -95,7 +96,7 @@ parser.add_argument('--decrypt',
                     action='store_true',
                     help="Key cannot be omitted. Decrypts a text encrypted "
                          "with the given key.")
-
+'''
 parser.add_argument(
     '--unsafe',
     nargs='?',
@@ -108,6 +109,7 @@ parser.add_argument(
         "111 -> 1 + 2 + 4 = 7 => keep all\r\n"
         "101 -> 4 + 0 + 1 = 5 => strip capitalization"
 )
+'''
 
 
 if __name__ == "__main__":
@@ -122,8 +124,8 @@ if __name__ == "__main__":
 
     # Forcefully remove all non-alphabetical characters, make 'em lowercase.
     # TODO: Remove this in lieu of safety_wrapper.
-    plain_text = str(char for char in plain_text
-                     if char in string.letters).lower()
+    plain_text = ''.join(char for char in plain_text
+                         if char in string.ascii_letters).lower()
 
 
     # This is the part that deals with keys.
