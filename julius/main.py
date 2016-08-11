@@ -17,9 +17,8 @@ def create_random_key(length: int) -> str:
     return ''.join(random.choice(string.ascii_lowercase) for _ in range(length))
 
 
-
 def vigenere(plain_text: str, key: str, decrypting=False) -> str:
-    # OOF
+    # TODO: There's gotta be a better way of dealing here.
     key = key.lower()
     return encrypt(plain_text, key, decrypting)
 
